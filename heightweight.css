@@ -1,0 +1,174 @@
+/*  
+    Copyright Abid Rahman 2018
+    Filename: heightweight.css
+    The main stylesheet 
+*/
+
+body {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 10px;
+    text-align: left;
+    margin: 50px auto;
+    max-width: 1050px;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #111;
+    margin: 1em 0;
+    padding: 0;
+}
+
+p {
+    font-size: 1.5em;
+    font-weight: 200;
+}
+
+#backlink {
+    float:right;
+    margin-bottom: 0;
+}
+
+#body {
+    position: relative;
+}
+
+#charts {
+    text-align: center;
+    padding: 10px 0;
+}
+
+#footer {
+    text-align: center;
+    position: relative;
+    margin: 50px 100px;
+    font-size: 1em;
+    font-weight: 200;
+}
+
+#plots {
+    text-align: center;
+}
+
+#plots p {
+    margin: 0em;
+    font-size: 1.75em;
+}
+
+#lists {
+    margin-top: 20px;
+    text-align: center;
+    max-height: 250px;
+    margin-left: 40px;
+}
+
+#year-filter {
+    width: 920px;
+}
+
+#weight-filter {
+    width: 450px;
+}
+
+#height-filter {
+    width: 450px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.background.bar {
+    fill: #fff;
+    stroke: #C64640;
+}
+
+.foreground.bar {
+    stroke: #C64640;
+    fill: rgba(198, 76, 64, 0.5);
+}
+
+.brush rect.extent {
+    fill: #C64640;
+    fill-opacity: .125;
+}
+
+.brush .resize path {
+    fill: #eee;
+    stroke: #666;
+}
+
+.chart {
+    display: inline-block;
+    height: 151px;
+    margin-bottom: 20px;
+}
+
+.dot {
+    fill: #fff;
+}
+
+.d3-tip {
+    text-align: center;
+    line-height: 1.2;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 1px;
+}
+
+.list {
+    display: inline-block;
+    text-align: left;
+    min-height: 250px;
+    line-height: 1.5em;
+    font-size: 1.25em;
+    width: 220px;
+}
+
+.list .player {
+    font-size: 1em;
+    font-weight: 200;
+    line-height: 1.5em;
+    margin-bottom: 1px;
+}
+
+.list .player .name {
+    display: inline-block;
+}
+
+.list .player .value {
+    float: right;
+    margin-right: 50px;
+}
+
+.list-title {
+    font-size: 1.25em;
+    font-weight: 400;
+    padding-bottom: 0.5em;
+}
+
+.reset {
+    font-size: 1em;
+    color: rgb(114, 114, 114);
+}
+
+.title {
+    font-size: 2em;
+    padding-top: 1em;
+    font-weight: 200;
+}
+
+.total_count {
+    font-size: 1.5em;
+}
+
+.zoom-brush rect.extent {
+    fill: #fff;
+    stroke: #000;
+}
