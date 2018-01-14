@@ -196,6 +196,43 @@ d3.csv("player_data.csv", function(error, players) {
         d3.select("#active").text((all.value()));
     }
 
+    //Handles searching for a player
+    $('#playerSearch').on('input', function() {
+
+        //Searched term
+        var searchedPlayer = $(this)[0].value.toLowerCase();
+
+        //Find corresponding player
+        var thePlayer = d3.selectAll(".dot")
+                            .filter(function(d) { return d.name.toLowerCase() == searchedPlayer; });
+
+        //Reset previously searched players
+        plotSVG.selectAll(".searched").classed("selected", false)
+             .transition().duration(1000)
+                .attr("r", 4)
+                .style("fill", "#FFF");
+
+        //Make changes to selected player if name matches
+        if (thePlayer[0].length > 0) {
+            thePlayer.moveToFront();
+            thePlayer.transition().duration(500)
+                .attr("r", 10)
+                .style("fill", function(d) { return color(d.position);});
+            
+            //Class the searched player
+            thePlayer.classed("searched", function(d, i) {
+                return !d3.select(this).classed("searched");
+            });
+        }
+    });
+
+    //Re inserts an object as the last child of the parent
+    d3.selection.prototype.moveToFront = function() {
+        return this.each(function(){
+            this.parentNode.appendChild(this);
+        });
+    };
+
     //Handles the zoom-brush
     function brushended() {
         var s = zoombrush.extent();

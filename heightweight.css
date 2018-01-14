@@ -26,6 +26,22 @@ p {
     font-weight: 200;
 }
 
+input {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background: url(search.png) no-repeat scroll 7px 7px;
+    background-size: 15px 15px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #BBB;
+    width: 250px;
+    height: 30px;
+    padding-left: 3%;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+}
+
 #backlink {
     float:right;
     margin-bottom: 0;
