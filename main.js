@@ -32,7 +32,7 @@ var tip = d3.tip()
 plotSVG.call(tip);
 
 //Import and handle the data
-d3.csv("player_data.csv", function(error, players) {
+d3.csv("data/player_data.csv", function(error, players) {
     if (error) throw error;
 
     //Preprocess player data
