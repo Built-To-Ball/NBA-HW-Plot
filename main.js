@@ -7,6 +7,15 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40},
 
 //Used to color code based on position
 var color = d3.scale.category10();
+var positions = {
+    "C": ["Center", 250],
+    "C-F": ["Center/Forward", 270],
+    "F-C": ["Forward/Center", 290],
+    "F": ["Forward", 310],
+    "F-G": ["Forward/Guard", 330],
+    "G-F": ["Guard/Forward", 350],
+    "G": ["Guard", 370]
+};
 
 //Setup the x and y axis 
 var x = d3.scale.linear(),
@@ -153,7 +162,7 @@ d3.csv("data/player_data.csv", function(error, players) {
         .data(color.domain())
       .enter().append("g")
         .attr("class", "legend")
-        .attr("transform", function(_, i) { return "translate(0," + (250+i*20) + ")"; });
+        .attr("transform", function(d, i) { return "translate(0," + (positions[d][1]) + ")"; });
   
     legend.append("rect")
         .attr("x", width - 18)
@@ -167,7 +176,7 @@ d3.csv("data/player_data.csv", function(error, players) {
         .attr("y", 9)
         .attr("dy", ".35em")
         .style("text-anchor", "end")
-        .text(function(d) { return d; });
+        .text(function(d) { return positions[d][0]; });
 
     //Handles brush changes
     window.filter = function(filters) {
