@@ -44,12 +44,16 @@ plotSVG.call(tip);
 d3.csv("data/player_data.csv", function(error, players) {
     if (error) throw error;
 
+    //List of player names for autofill
+    playerNames = [];
+
     //Preprocess player data
     players.forEach(function(d, index, object) {
         d.height = +d.height;
         d.weight = +d.weight;
         d.year_start = +d.year_start;
         d.year_end = +d.year_end;
+        playerNames.push(d.name);
     });
 
     //Create crossfilters for the players
@@ -206,7 +210,18 @@ d3.csv("data/player_data.csv", function(error, players) {
     }
 
     //Handles searching for a player
-    $('#playerSearch').on('input', function() {
+    $('#playerSearch').on('change keyup', function() {
+        
+        $(this).autocomplete({
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(playerNames, request.term);
+                response(results.slice(0, 10));
+            },
+            messages: {
+                noResults: '',
+                results: function() { }
+            },
+        });
 
         //Searched term
         var searchedPlayer = $(this)[0].value.toLowerCase();
@@ -216,10 +231,7 @@ d3.csv("data/player_data.csv", function(error, players) {
                             .filter(function(d) { return d.name.toLowerCase() == searchedPlayer; });
 
         //Reset previously searched players
-        plotSVG.selectAll(".searched").classed("selected", false)
-             .transition().duration(1000)
-                .attr("r", 4)
-                .style("fill", "#FFF");
+        plotSVG.selectAll(".searched").classed("selected", false).attr("r", 4).style("fill", "#FFF");
 
         //Make changes to selected player if name matches
         if (thePlayer[0].length > 0) {
@@ -233,6 +245,7 @@ d3.csv("data/player_data.csv", function(error, players) {
                 return !d3.select(this).classed("searched");
             });
         }
+
     });
 
     //Re inserts an object as the last child of the parent
