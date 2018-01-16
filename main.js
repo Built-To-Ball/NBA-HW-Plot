@@ -210,8 +210,8 @@ d3.csv("data/player_data.csv", function(error, players) {
     }
 
     //Handles searching for a player
-    $('#playerSearch').on('change keyup', function() {
-        
+    $('#playerSearch').on('input change keyup', function() {
+
         $(this).autocomplete({
             source: function(request, response) {
                 var results = $.ui.autocomplete.filter(playerNames, request.term);
@@ -231,7 +231,12 @@ d3.csv("data/player_data.csv", function(error, players) {
                             .filter(function(d) { return d.name.toLowerCase() == searchedPlayer; });
 
         //Reset previously searched players
-        plotSVG.selectAll(".searched").classed("selected", false).attr("r", 4).style("fill", "#FFF");
+        plotSVG.selectAll(".searched")
+            .transition().duration(250)
+            .attr("r", 4)
+            .style("fill", "#FFF");
+
+        plotSVG.selectAll(".searched").classed("searched", false);
 
         //Make changes to selected player if name matches
         if (thePlayer[0].length > 0) {
@@ -241,9 +246,7 @@ d3.csv("data/player_data.csv", function(error, players) {
                 .style("fill", function(d) { return color(d.position);});
             
             //Class the searched player
-            thePlayer.classed("searched", function(d, i) {
-                return !d3.select(this).classed("searched");
-            });
+            thePlayer.classed("searched", true);
         }
 
     });
