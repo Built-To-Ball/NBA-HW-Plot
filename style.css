@@ -4,6 +4,10 @@
     The main stylesheet 
 */
 
+:root {
+    --primary-color: #C64640;
+}
+
 body {
     font-family: 'PT Sans', sans-serif;
     font-size: 10px;
@@ -16,7 +20,7 @@ hr {
     display: block;
     height: 1px;
     border: 0;
-    border-top: 1px solid #111;
+    border-top: 2px solid #000;
     margin: 1em 0;
     padding: 0;
 }
@@ -34,7 +38,7 @@ input {
     background-size: 15px 15px;
     border-radius: 5px;
     border-width: 1px;
-    border-color: #BBB;
+    border-color: var(--primary-color);
     width: 250px;
     height: 30px;
     padding-left: 3%;
@@ -51,11 +55,7 @@ input {
     margin: 0;
     list-style-type: none;
     border-radius: 5px;
-    border: 1px solid #bbb; 
-}
-
-.ui-menu-item {
-    border-bottom: 2px solid #bbb;
+    border: 1px solid var(--primary-color); 
 }
 
 #backlink {
@@ -117,16 +117,16 @@ input {
 
 .background.bar {
     fill: #fff;
-    stroke: #C64640;
+    stroke: var(--primary-color);
 }
 
 .foreground.bar {
-    stroke: #C64640;
+    stroke: var(--primary-color);
     fill: rgba(198, 76, 64, 0.5);
 }
 
 .brush rect.extent {
-    fill: #C64640;
+    fill: var(--primary-color);
     fill-opacity: .125;
 }
 
@@ -183,6 +183,25 @@ input {
     font-size: 1.25em;
     font-weight: 400;
     padding-bottom: 0.5em;
+}
+
+.playerInfo {
+    font-size: 1.2em;
+    display: none;
+}
+
+.playerInfo #playerInfoName {
+    font-size: 1.2em;
+}
+
+.playerInfo rect {
+    width: 280px;
+    height: 120px;
+    fill-opacity: 0.3;
+    stroke: #000;
+    stroke-width: 1px;
+    rx: 10px;
+    ry: 10px;
 }
 
 .reset {

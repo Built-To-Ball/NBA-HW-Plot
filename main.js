@@ -30,16 +30,6 @@ var plotSVG = d3.select(".plotSVG").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//Initalize the mini hover tip
-var tip = d3.tip()
-    .attr("class", "d3-tip")
-    .offset([-5, 0])
-    .html(function(d) {
-        return "<span>" + d.name + "<br>" + d.height + " in<br>" + d.weight + " lbs<br></span>";
-    });
-
-plotSVG.call(tip);
-
 //Import and handle the data
 d3.csv("data/player_data.csv", function(error, players) {
     if (error) throw error;
@@ -103,16 +93,28 @@ d3.csv("data/player_data.csv", function(error, players) {
         .style("text-anchor", "end")
         .text("Player Height (inches)");
 
-    //Setup zoom brushing
-    var zoombrush = d3.svg.brush()
-        .y(y)
-        .x(x)
-        .on("brushend", brushended);
+    //Setup the player info
+    var playerInfoDisp = plotSVG.append("g").attr("class", "playerInfo").attr("transform", "translate(50, 20)");
+    playerInfoDisp.append("rect").attr("class", "playerInfoBox").attr("x", -20).attr("y", -20);
     
-    //Attach the zoom-brush to the svg
-    var zbrush = plotSVG.append("g")
-        .attr("class", "zoom-brush")
-        .call(zoombrush);
+    playerInfoDisp.append("text").attr("id", "playerInfoName").attr("y", 0);
+    playerInfoDisp.append("text").attr("id", "playerInfoPos").attr("y", 15);
+    playerInfoDisp.append("text").attr("id", "playerInfoHeight").attr("y", 30);
+    playerInfoDisp.append("text").attr("id", "playerInfoWeight").attr("y", 45);
+    playerInfoDisp.append("text").attr("id", "playerInfoBirth").attr("y", 60);
+    playerInfoDisp.append("text").attr("id", "playerInfoCollege").attr("y", 75);
+    playerInfoDisp.append("text").attr("id", "playerInfoRookieYear").attr("y", 90);
+
+    // //Setup zoom brushing
+    // var zoombrush = d3.svg.brush()
+    //     .y(y)
+    //     .x(x)
+    //     .on("brushend", brushended);
+    
+    // //Attach the zoom-brush to the svg
+    // var zbrush = plotSVG.append("g")
+    //     .attr("class", "zoom-brush")
+    //     .call(zoombrush);
 
     var charts = [
         barChart()
@@ -231,12 +233,16 @@ d3.csv("data/player_data.csv", function(error, players) {
                             .filter(function(d) { return d.name.toLowerCase() == searchedPlayer; });
 
         //Reset previously searched players
-        plotSVG.selectAll(".searched")
-            .transition().duration(250)
-            .attr("r", 4)
-            .style("fill", "#FFF");
-
-        plotSVG.selectAll(".searched").classed("searched", false);
+        var prevPlayer = plotSVG.selectAll(".searched");
+        
+        if (prevPlayer[0].length > 0) {
+            prevPlayer.transition().duration(250)
+                .attr("r", 4)
+                .style("fill", "#FFF");
+            
+            prevPlayer.classed("searched", false)
+                .hidePlayerInfo();
+        }
 
         //Make changes to selected player if name matches
         if (thePlayer[0].length > 0) {
@@ -247,9 +253,30 @@ d3.csv("data/player_data.csv", function(error, players) {
             
             //Class the searched player
             thePlayer.classed("searched", true);
+            thePlayer.showPlayerInfo();
         }
-
     });
+
+    //Appends player info to the SVG
+    d3.selection.prototype.showPlayerInfo = function(d) {
+        playerInfo = this[0][0].__data__;
+        $(".playerInfo").css("display","block");
+
+        plotSVG.select("#playerInfoName").text(playerInfo.name).style();
+        plotSVG.select("#playerInfoBirth").text("Born: " + playerInfo.birth_date);
+        plotSVG.select("#playerInfoCollege").text("College: " + playerInfo.college);
+        plotSVG.select("#playerInfoPos").text(positions[playerInfo.position][0]);
+        plotSVG.select("#playerInfoHeight").text(playerInfo.height + " inches");
+        plotSVG.select("#playerInfoWeight").text(playerInfo.weight + " lbs");
+        plotSVG.select("#playerInfoRookieYear").text("Rookie Year: " + playerInfo.year_start);
+        plotSVG.select(".playerInfoBox").style("fill", function() { return color(playerInfo.position); });
+        return this;
+    };
+
+    d3.selection.prototype.hidePlayerInfo = function() {
+        $(".playerInfo").css("display","none");
+        return this;
+    };
 
     //Re inserts an object as the last child of the parent
     d3.selection.prototype.moveToFront = function() {
@@ -259,8 +286,8 @@ d3.csv("data/player_data.csv", function(error, players) {
     };
 
     //Handles the zoom-brush
-    function brushended() {
-        var s = zoombrush.extent();
+    // function brushended() {
+        // var s = zoombrush.extent();
         // plotSVG.selectAll(".selected").classed("selected", false)
         //     .transition().duration(1000).attr("r", 4);
           
@@ -275,7 +302,7 @@ d3.csv("data/player_data.csv", function(error, players) {
         // selCir.classed("selected", function(d, i) {
         //     return !d3.select(this).classed("selected");
         // });
-    }
+    // }
 
     //Handles rendering the top player lists
     function playerList(div) {
@@ -329,6 +356,7 @@ d3.csv("data/player_data.csv", function(error, players) {
 
         //Get updated data
         players = filter_year.top(Infinity);
+        playerNames = players.map(function(a) { return a.name; });
 
         //Add all dots with updated data
         plot = plotSVG.selectAll(".dot")
@@ -342,12 +370,10 @@ d3.csv("data/player_data.csv", function(error, players) {
             .attr("cy", function(d) { return y(d.height); })
             .style("stroke", function(d) { return color(d.position); })
             .on("mouseover", function(d) {
-                tip.show(d);
-                d3.select(this).style("fill", function(d) { return color(d.position);});
+                d3.select(this).showPlayerInfo().style("fill", function(d) { return color(d.position);});
             })
             .on("mouseout", function(d) {
-                tip.hide(d);
-                d3.select(this).style("fill", "#fff");
+                d3.select(this).hidePlayerInfo().style("fill", "#fff");
             });
 
     }
