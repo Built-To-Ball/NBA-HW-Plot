@@ -7,6 +7,7 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40},
 
 //Used to color code based on position
 var color = d3.scale.category10();
+
 var positions = {
     "C": ["Center", 250],
     "C-F": ["Center/Forward", 270],
@@ -94,8 +95,7 @@ d3.csv("data/player_data.csv", function(error, players) {
         .text("Player Height (inches)");
 
     //Setup the player info
-    var playerInfoDisp = plotSVG.append("g").attr("class", "playerInfo").attr("transform", "translate(50, 20)");
-    playerInfoDisp.append("rect").attr("class", "playerInfoBox").attr("x", -20).attr("y", -20);
+    var playerInfoDisp = plotSVG.append("g").attr("class", "playerInfo").attr("transform", "translate(480, 300)");
     
     playerInfoDisp.append("text").attr("id", "playerInfoName").attr("y", 0);
     playerInfoDisp.append("text").attr("id", "playerInfoPos").attr("y", 15);
@@ -269,7 +269,7 @@ d3.csv("data/player_data.csv", function(error, players) {
         plotSVG.select("#playerInfoHeight").text(playerInfo.height + " inches");
         plotSVG.select("#playerInfoWeight").text(playerInfo.weight + " lbs");
         plotSVG.select("#playerInfoRookieYear").text("Rookie Year: " + playerInfo.year_start);
-        plotSVG.select(".playerInfoBox").style("fill", function() { return color(playerInfo.position); });
+        plotSVG.select(".playerInfo").style("fill", function() { return color(playerInfo.position); });
         return this;
     };
 

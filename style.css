@@ -145,15 +145,6 @@ input {
     fill: #fff;
 }
 
-.d3-tip {
-    text-align: center;
-    line-height: 1.2;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    border-radius: 1px;
-}
-
 .list {
     display: inline-block;
     text-align: left;
@@ -192,16 +183,6 @@ input {
 
 .playerInfo #playerInfoName {
     font-size: 1.2em;
-}
-
-.playerInfo rect {
-    width: 280px;
-    height: 120px;
-    fill-opacity: 0.3;
-    stroke: #000;
-    stroke-width: 1px;
-    rx: 10px;
-    ry: 10px;
 }
 
 .reset {
