@@ -21,6 +21,11 @@ p {
     font-weight: 200;
 }
 
+a {
+    color: #000;
+    text-decoration: none;
+}
+
 /* Player Search*/
 input {
     -webkit-border-radius: 5px;
@@ -231,7 +236,13 @@ input {
     margin-top: 5%;
     color: rgb(0, 0, 0);
     border-top: rgb(187, 119, 31) solid 3px;
-    text-align: center;
-    font-size: 1em;
+    text-align: right;
+    font-size: 1.5em;
     font-weight: 200;
+    padding-top: 10px;
+}
+
+#footer a {
+    color: #000 !important;
+    text-decoration: underline;
 }
