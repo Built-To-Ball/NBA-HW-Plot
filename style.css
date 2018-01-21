@@ -60,6 +60,7 @@ input {
 #body {
     position: relative;
     margin: 0 auto 20px auto;
+    max-width: 1050px;
 }
 
 #charts {
