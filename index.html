@@ -5,35 +5,41 @@
         <meta name="description" content="Height vs Weight Interactive Scatter Plot">
     </head>
     <body>
+        <!-- Static Logo -->
+        <div id="header">
+            <span>
+                <a href="http://built-to-ball.com"<h1 class="header-title">BTB</h1></a>
+                <div class="logo"><a href="https://github.com/abidrahman">
+                <svg class="icon" viewBox="0 0 1000 1000" stroke="white" stroke-width="20">
+                    <path d="M658,511l-0.1-0.1c48.2-15.7,83-58,83-107.4V192.9c0-62.7-56-114.1-124.5-114.1h-86.2h-35.1H492v0l-23.4,0L35.2,921.2
+                    l42.5,0l207.7-403.7H492v403.7h38.3V517.6h86.2c0.8,0,1.6-0.1,2.4-0.1l-0.4,0.1l298.3,403.7l46.2,0L658,511z M303.5,482.4L492,113.9
+                    v368.6H303.5z M530.3,482.4V113.9h86.2c47.5,0,86.2,35.4,86.2,79v210.6c0,43.5-38.7,79-86.2,79H530.3z"/>
+                </svg></a>
+                </div>
+            </span>
+        </div>
         <div id="body">
-            <!-- Static Logo -->
-            <div id="logo">
-                <span>
-                <a href="http://built-to-ball.com"<h1 class="header-title">Built To Ball</h1></a>
-                <a href="https://github.com/abidrahman"><img src="logo.png" width="40" height="40"></a>
-                </span>
-            </div>
             <div id="plots">
+                <h1 class="title">Height vs Weight</h1>
                 <p>The interactive chart below includes all 4550 players to have ever played in the NBA dating back to 1947.</p>
                 <p>To see a subset of players, adjust the weight, height, and year filters by clicking and dragging on the bar charts.</p>
-                <div class="title">Height vs Weight</div>
-                <div class="total_count"><span id="active">-</span> of <span id="total"></span> players selected.</div>
                 <input id="playerSearch" type="text" placeholder="Player Name..">
+                <div class="total_count"><span id="active">-</span> of <span id="total"></span> players selected.</div>
                 <div class="plotSVG"></div>
             </div>
 
             <!-- Charts -->
             <div id="charts">
                 <div id="weight-filter" class="chart">
-                    <div class="title">Weight</div>
+                    <div class="chart-title">Weight</div>
                     <div class="title-reset"></div>
                 </div>
                 <div id="height-filter" class="chart">
-                    <div class="title">Height</div>
+                    <div class="chart-title">Height</div>
                     <div class="title-reset"></div>
                 </div>
                 <div id="year-filter" class="chart">
-                    <div class="title">Rookie Year</div>
+                    <div class="chart-title">Rookie Year</div>
                     <div class="title-reset"></div>
                 </div>
             </div>
@@ -46,15 +52,15 @@
                 <div id="bot-weight" class="list"><div class="list-title">Top 10 Lightest Players</div></div>
             </div>
             </div>
-
-            <!-- Footer -->
-            <div id="footer">
-                To find out how this webpage was made, read the blog posts <a href="https://medium.com/built-to-ball">here</a>
-            </div>
         </div>
+        <footer>
+            <div id="blog">
+                To find out how this webpage was made, read the blog posts <a href="https://medium.com/built-to-ball">here</a>.
+            </div>
+        </footer>
     </body>
 
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
