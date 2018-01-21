@@ -5,7 +5,7 @@
 */
 
 :root {
-    --primary-color: #C64640;
+    --divider_color: rgb(155, 117, 91);
 }
 
 body {
@@ -32,7 +32,7 @@ input {
     background-size: 15px 15px;
     border-radius: 5px;
     border-width: 1px;
-    border-color: var(--primary-color);
+    border-color: var(--divider-color);
     width: 250px;
     height: 30px;
     padding-left: 3%;
@@ -49,15 +49,10 @@ input {
     margin: 0;
     list-style-type: none;
     border-radius: 5px;
-    border: 1px solid var(--primary-color); 
+    border: 1px solid var(--divider-color); 
 }
 
-#backlink {
-    float:right;
-    margin-bottom: 0;
-}
-
-#body {
+main {
     position: relative;
     margin: 0 auto 20px auto;
     max-width: 1050px;
@@ -111,16 +106,16 @@ input {
 
 .background.bar {
     fill: #fff;
-    stroke: var(--primary-color);
+    stroke: var(--divider-color);
 }
 
 .foreground.bar {
-    stroke: var(--primary-color);
+    stroke: var(--divider-color);
     fill: rgba(198, 76, 64, 0.5);
 }
 
 .brush rect.extent {
-    fill: var(--primary-color);
+    fill: var(--divider-color);
     fill-opacity: .125;
 }
 
@@ -200,18 +195,18 @@ input {
 
 /* LOGO / HEADER */
 
-#header {
+header {
     position: fixed;
-    width: 100vw;
+    width: 70vw;
     z-index: 10;
-    height: 100px;
+    height: 75px;
     border-bottom: var(--divider_color) solid 2px;
-    min-width: 750px;
-    background-image: url("hardwood_bg.jpg");
-    background-size: contain;
+    background: #fff;
+    margin-left: 15vw;
+    min-width: 650px;
 }
 
-#header span {
+header span {
     position: absolute;
     bottom: 0;
     height: 100%;
@@ -219,42 +214,43 @@ input {
     text-align: right;
     display: flex;
     align-items: center;
-    background: linear-gradient(to left, rgba(0,0,0,0.6), rgba(0,0,0,1));
-    background: -moz-linear-gradient(right,rgba(0,0,0,0.6), rgba(0,0,0,1));
-    background: -webkit-linear-gradient(right,rgba(0,0,0,0.6), rgba(0,0,0,1));
 }
 
-#header .logo .icon {
+header .logo .icon {
     width: 25px;
     height: 25px;
-    fill: #fff;
+    fill: #000;
     margin:0;
 }
 
 .header-title {
     font-size: 2em;
-    width: 80vw;
+    width: 65vw;
+    min-width: 600px;
     text-align: left;
     float: left;
-    color: #fff;
-    margin: 0 0 0 150px;
+    color: #000;
 }
+
+/* BLOG LINKS / FOOTER */
 
 /* BLOG LINKS / FOOTER */
 
 footer {
     position: absolute;
     height: 50px;
-    width: 100vw;
+    width: 70vw;
+    margin-left: 15vw;
     background: #fff;
+    min-width: 650px;
 }
 
 #blog {
     font-size: 1.5em;
     text-align: right;
     color: rgb(0, 0, 0);
-    border-top: #000 solid 2px;
-    padding: 10px 150px 10px 0;
+    border-top: var(--divider_color) solid 2px;
+    padding: 10px 0 10px 0;
     min-width: 750px;
 }
 
