@@ -197,23 +197,24 @@ main {
 
 header {
     position: fixed;
-    width: 70vw;
-    z-index: 10;
     height: 75px;
-    border-bottom: var(--divider_color) solid 2px;
-    background: #fff;
-    margin-left: 15vw;
+    width: 100vw;
     min-width: 650px;
+    z-index: 10;
+    background: #fff;
 }
 
 header span {
-    position: absolute;
-    bottom: 0;
     height: 100%;
-    width: 100%;
-    text-align: right;
+    width: 70%;
+    min-width: 650px;
+    position: absolute;
     display: flex;
+    bottom: 0;
+    text-align: right;
     align-items: center;
+    margin-left: 150px;
+    border-bottom: var(--divider_color) solid 2px;
 }
 
 header .logo .icon {
@@ -242,7 +243,6 @@ footer {
     width: 70vw;
     margin-left: 15vw;
     background: #fff;
-    min-width: 650px;
 }
 
 #blog {
@@ -251,7 +251,7 @@ footer {
     color: rgb(0, 0, 0);
     border-top: var(--divider_color) solid 2px;
     padding: 10px 0 10px 0;
-    min-width: 750px;
+    min-width: 650px;
 }
 
 #blog a {
