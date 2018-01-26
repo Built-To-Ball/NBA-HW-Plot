@@ -1,4 +1,4 @@
-# NBA-HW-Plot
+# NBA Height vs Weight
 NBA Historical Height vs Weight Interactive Scatter Plot
 
 ![BTB-HvW](preview.png)
