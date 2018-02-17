@@ -6,7 +6,7 @@ $( document ).ready(function () {
         height = 500 - margin.top - margin.bottom;
 
     //Used to color code based on position
-    var color = d3.scale.category10();
+    var color = d3.scale.category20();
 
     var positions = {
         "C": ["Center", 250],
@@ -174,10 +174,10 @@ $( document ).ready(function () {
             .attr("x", width - 18)
             .attr("width", 18)
             .attr("height", 18)
-            .style("fill", color)
-            .style("opacity", "0.6");
+            .style("fill", color);
 
         legend.append("text")
+            .attr("class", "legendText")
             .attr("x", width - 24)
             .attr("y", 9)
             .attr("dy", ".35em")
@@ -238,7 +238,7 @@ $( document ).ready(function () {
             if (prevPlayer[0].length > 0) {
                 prevPlayer.transition().duration(250)
                     .attr("r", 4)
-                    .style("fill", "#FFF");
+                    .style("fill", "var(--main_dark");
                 
                 prevPlayer.classed("searched", false)
                     .hidePlayerInfo();
@@ -248,7 +248,7 @@ $( document ).ready(function () {
             if (thePlayer[0].length > 0) {
                 thePlayer.moveToFront();
                 thePlayer.transition().duration(500)
-                    .attr("r", 10)
+                    .attr("r", 12)
                     .style("fill", function(d) { return color(d.position);});
                 
                 //Class the searched player
@@ -370,10 +370,14 @@ $( document ).ready(function () {
                 .attr("cy", function(d) { return y(d.height); })
                 .style("stroke", function(d) { return color(d.position); })
                 .on("mouseover", function(d) {
+                    d3.select(this).moveToFront();
                     d3.select(this).showPlayerInfo().style("fill", function(d) { return color(d.position);});
+                    d3.select(this).showPlayerInfo().attr("r", 10);
+                    
                 })
                 .on("mouseout", function(d) {
-                    d3.select(this).hidePlayerInfo().style("fill", "#fff");
+                    d3.select(this).hidePlayerInfo().style("fill", "var(--main_dark)");
+                    d3.select(this).hidePlayerInfo().attr("r", 4);
                 });
 
         }
