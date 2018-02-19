@@ -5,74 +5,74 @@
 */
 
 :root {
-    --primary_color: black;
-    --main_dark: rgb(14, 24, 29);
-    --main_light: rgb(221, 225, 119);
-    --main_lighter: rgb(242, 245, 195);
-    --main_lighter_faint: rgba(242, 245, 195, 0.6);
-    --main_light2: rgb(202, 206, 97);
+  --primary_color: black;
+  --main_dark: rgb(14, 24, 29);
+  --main_light: rgb(221, 225, 119);
+  --main_lighter: rgb(242, 245, 195);
+  --main_lighter_faint: rgba(242, 245, 195, 0.6);
+  --main_light2: rgb(202, 206, 97);
 }
 
 main {
-    position: relative;
-    margin: 0 auto 20px auto;
-    max-width: 1050px;
-    padding-top: 75px;
+  position: relative;
+  margin: 0 auto 20px auto;
+  max-width: 1050px;
+  padding-top: 75px;
 }
 
 body {
-    color: var(--main_lighter_faint);
-    background: var(--main_dark);
-    font-family: 'Barlow+Semi+Condensed', sans-serif;
-    font-size: 10px;
-    margin: 0;
+  color: var(--main_lighter_faint);
+  background: var(--main_dark);
+  font-family: "Barlow+Semi+Condensed", sans-serif;
+  font-size: 10px;
+  margin: 0;
 }
 
 p {
-    font-size: 1.5em;
-    font-weight: 200;
+  font-size: 1.5em;
+  font-weight: 200;
 }
 
 a {
-    color: var(--main_light) !important;
-    text-decoration: none;
+  color: var(--main_light) !important;
+  text-decoration: none;
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* SEARCH BAR */
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 input {
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    background: url(assets/search.png) no-repeat scroll 7px 7px;
-    background-size: 15px 15px;
-    border-radius: 5px;
-    border-width: 1px;
-    border-color: var(--divider-color);
-    width: 250px;
-    height: 30px;
-    padding-left: 3%;
-    margin-top: 25px;
-    margin-bottom: 10px;
-    font-size: 1.4em;
-    color: var(--main_lighter);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  background: url(assets/search.png) no-repeat scroll 7px 7px;
+  background-size: 15px 15px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: var(--divider-color);
+  width: 250px;
+  height: 30px;
+  padding-left: 3%;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-size: 1.4em;
+  color: var(--main_lighter);
 }
 
 .ui-menu {
-    font-size: 1.5em;
-    color: var(--main_lighter);
-    background: var(--main_dark);
-    width: 200px;
-    margin: 0;
-    list-style-type: none;
-    border-radius: 5px;
-    border: 1px solid var(--main_lighter); 
+  font-size: 1.5em;
+  color: var(--main_lighter);
+  background: var(--main_dark);
+  width: 200px;
+  margin: 0;
+  list-style-type: none;
+  border-radius: 5px;
+  border: 1px solid var(--main_lighter);
 }
 
 .ui-menu-item {
-    margin: 0;
-    padding: 2px;
-    border-bottom: 1px solid var(--main_lighter_faint);
+  margin: 0;
+  padding: 2px;
+  border-bottom: 1px solid var(--main_lighter_faint);
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -80,41 +80,42 @@ input {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 #plots {
-    z-index: 1;
-    text-align: center;
+  z-index: 1;
+  text-align: center;
 }
 
 .plotSVG svg {
-    margin: 4vh 0 4vh 0;
-    padding: 2vh 2vw 2vh 2vw;
-    box-shadow: 2em 2em 4em 1em rgba(0,0,0,0.7);
+  margin: 4vh 0 4vh 0;
+  padding: 2vh 2vw 2vh 2vw;
+  box-shadow: 2em 2em 4em 1em rgba(0, 0, 0, 0.7);
 }
 
-.tick, .label {
-    fill: var(--main_lighter_faint);
+.tick,
+.label {
+  fill: var(--main_lighter_faint);
 }
 
 .title {
-    font-size: 4em;
-    font-weight: 200;
-    color: var(--main_lighter);
+  font-size: 4em;
+  font-weight: 200;
+  color: var(--main_lighter);
 }
 
 .total_count {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 #plots p {
-    margin: 0em;
-    font-size: 1.5em;
+  margin: 0em;
+  font-size: 1.5em;
 }
 
 .dot {
-    fill: var(--main_dark);
+  fill: var(--main_dark);
 }
 
 .legendText {
-    fill: var(--main_lighter_faint);
+  fill: var(--main_lighter_faint);
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -122,68 +123,68 @@ input {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 #charts {
-    text-align: center;
-    padding: 10px 0;
+  text-align: center;
+  padding: 10px 0;
 }
 
 #year-filter {
-    width: 920px;
+  width: 920px;
 }
 
 #weight-filter {
-    width: 450px;
+  width: 450px;
 }
 
 #height-filter {
-    width: 450px;
+  width: 450px;
 }
 
 .chart-title {
-    color: var(--main_light);
-    font-size: 2em;
+  color: var(--main_light);
+  font-size: 2em;
 }
 
 .axis path,
 .axis line {
-    fill: none;
-    stroke: var(--main_lighter);
-    shape-rendering: crispEdges;
+  fill: none;
+  stroke: var(--main_lighter);
+  shape-rendering: crispEdges;
 }
 
 .background.bar {
-    fill: var(--main_dark);
-    stroke: var(--main_lighter);
+  fill: var(--main_dark);
+  stroke: var(--main_lighter);
 }
 
 .foreground.bar {
-    stroke: var(--main_light);
-    fill: #fff;
+  stroke: var(--main_light);
+  fill: #fff;
 }
 
 .brush rect.extent {
-    fill: var(--main_lighter);
-    fill-opacity: .065;
+  fill: var(--main_lighter);
+  fill-opacity: 0.065;
 }
 
 .brush .resize path {
-    fill: #eee;
-    stroke: #666;
+  fill: #eee;
+  stroke: #666;
 }
 
 .chart {
-    display: inline-block;
-    height: 151px;
-    margin-bottom: 20px;
+  display: inline-block;
+  height: 151px;
+  margin-bottom: 20px;
 }
 
 .zoom-brush rect.extent {
-    fill: #fff;
-    stroke: #000;
+  fill: #fff;
+  stroke: #000;
 }
 
 .reset {
-    font-size: 1em;
-    color: rgb(114, 114, 114);
+  font-size: 1em;
+  color: rgb(114, 114, 114);
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -191,51 +192,51 @@ input {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 #lists {
-    margin-top: 20px;
-    text-align: center;
-    max-height: 250px;
-    margin-left: 40px;
+  margin-top: 20px;
+  text-align: center;
+  max-height: 250px;
+  margin-left: 40px;
 }
 
 .list {
-    display: inline-block;
-    text-align: left;
-    min-height: 250px;
-    line-height: 1.5em;
-    font-size: 1.25em;
-    width: 220px;
+  display: inline-block;
+  text-align: left;
+  min-height: 250px;
+  line-height: 1.5em;
+  font-size: 1.25em;
+  width: 220px;
 }
 
 .list .player {
-    font-size: 1em;
-    font-weight: 200;
-    line-height: 1.5em;
-    margin-bottom: 1px;
+  font-size: 1em;
+  font-weight: 200;
+  line-height: 1.5em;
+  margin-bottom: 1px;
 }
 
 .list .player .name {
-    display: inline-block;
+  display: inline-block;
 }
 
 .list .player .value {
-    float: right;
-    margin-right: 50px;
+  float: right;
+  margin-right: 50px;
 }
 
 .list-title {
-    font-size: 1.25em;
-    font-weight: 400;
-    padding-bottom: 1em;
-    color: var(--main_light);
+  font-size: 1.25em;
+  font-weight: 400;
+  padding-bottom: 1em;
+  color: var(--main_light);
 }
 
 .playerInfo {
-    font-size: 1.2em;
-    display: none;
+  font-size: 1.2em;
+  display: none;
 }
 
 .playerInfo #playerInfoName {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -243,17 +244,17 @@ input {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 footer {
-    position: absolute;
-    height: 50px;
-    width: 100%;
-    background: var(--main_dark);
+  position: absolute;
+  height: 50px;
+  width: 100%;
+  background: var(--main_dark);
 }
 
 #blog {
-    font-size: 1.5em;
-    text-align: right;
-    color: var(--main_lighter);
-    border-top: var(--main_lighter_faint) solid 2px;
-    padding: 10px 10vw 10px 0;
-    min-width: 650px;
+  font-size: 1.5em;
+  text-align: right;
+  color: var(--main_lighter);
+  border-top: var(--main_lighter_faint) solid 2px;
+  padding: 10px 10vw 10px 0;
+  min-width: 650px;
 }
