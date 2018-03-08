@@ -387,7 +387,6 @@ $(document).ready(function() {
 
     //Handles rendering plot with updated data
     function updatePlot() {
-      plotSVG.selectAll(".dot").remove();
 
       //Get updated data
       players = filter_year.top(Infinity);
@@ -396,14 +395,15 @@ $(document).ready(function() {
       });
 
       //Add all dots with updated data
-      plot = plotSVG.selectAll(".dot").data(players);
+      plot = plotSVG.selectAll("circle").data(players);
+
+      plot.exit().remove();
 
       //Update new players
-      plot
-        .enter()
+      plot.enter()
         .append("circle")
-        .attr("class", "dot")
         .attr("r", 4)
+      .merge(plot)
         .attr("cx", function(d) {
           return x(d.weight);
         })
