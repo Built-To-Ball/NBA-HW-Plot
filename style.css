@@ -38,6 +38,10 @@ a {
   text-decoration: none;
 }
 
+svg text {
+  fill: var(--main_lighter_faint);
+}
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* SEARCH BAR */
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -257,4 +261,8 @@ footer {
   border-top: var(--main_lighter_faint) solid 2px;
   padding: 10px 10vw 10px 0;
   min-width: 650px;
+}
+
+#blog a {
+  text-decoration: underline;
 }

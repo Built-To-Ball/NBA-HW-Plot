@@ -1,12 +1,13 @@
 //JS file, where the magic happens
 $(document).ready(function() {
+
   //Setup SVG size vars
   var margin = { top: 20, right: 20, bottom: 30, left: 40 },
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
   //Used to color code based on position
-  var color = d3.scale.category20();
+  var color = d3.scaleOrdinal(d3.schemeCategory20);
 
   var positions = {
     C: ["Center", 250],
@@ -17,12 +18,6 @@ $(document).ready(function() {
     "G-F": ["Guard/Forward", 350],
     G: ["Guard", 370]
   };
-
-  //Setup the x and y axis
-  var x = d3.scale.linear(),
-    y = d3.scale.linear(),
-    xAxis = d3.svg.axis(),
-    yAxis = d3.svg.axis();
 
   //Initialize the svg
   var plotSVG = d3
@@ -66,32 +61,27 @@ $(document).ready(function() {
         return d.height;
       }),
       filter_heights = filter_height.group(Math.floor);
-    filter_position = player.dimension(function(d) {
-      return d.position;
-    });
+      filter_position = player.dimension(function(d) {
+        return d.position;
+      });
 
     // Render the total.
     d3.selectAll("#total").text(players.length);
 
     //Render the plot axiss
-    xAxis.scale(x).orient("bottom");
-    x.range([0, width]);
-    yAxis.scale(y).orient("left");
-    y.range([height, 0]);
-    x
-      .domain(
-        d3.extent(players, function(d) {
-          return d.weight;
-        })
-      )
-      .nice();
-    y
-      .domain(
-        d3.extent(players, function(d) {
-          return d.height;
-        })
-      )
-      .nice();
+    var x = d3.scaleLinear().range([0, width]).domain(
+      d3.extent(players, function(d) {
+        return d.weight;
+      })
+    ).nice(),
+    y = d3.scaleLinear().range([height, 0]).domain(
+      d3.extent(players, function(d) {
+        return d.height;
+      })
+    ).nice();
+
+    var xAxis = d3.axisBottom(x),
+    yAxis = d3.axisLeft(y);
 
     //Render the plot x axis
     plotSVG
@@ -125,53 +115,20 @@ $(document).ready(function() {
       .attr("class", "playerInfo")
       .attr("transform", "translate(480, 300)");
 
-    playerInfoDisp
-      .append("text")
-      .attr("id", "playerInfoName")
-      .attr("y", 0);
-    playerInfoDisp
-      .append("text")
-      .attr("id", "playerInfoPos")
-      .attr("y", 15);
-    playerInfoDisp
-      .append("text")
-      .attr("id", "playerInfoHeight")
-      .attr("y", 30);
-    playerInfoDisp
-      .append("text")
-      .attr("id", "playerInfoWeight")
-      .attr("y", 45);
-    playerInfoDisp
-      .append("text")
-      .attr("id", "playerInfoBirth")
-      .attr("y", 60);
-    playerInfoDisp
-      .append("text")
-      .attr("id", "playerInfoCollege")
-      .attr("y", 75);
-    playerInfoDisp
-      .append("text")
-      .attr("id", "playerInfoRookieYear")
-      .attr("y", 90);
-
-    // //Setup zoom brushing
-    // var zoombrush = d3.svg.brush()
-    //     .y(y)
-    //     .x(x)
-    //     .on("brushend", brushended);
-
-    // //Attach the zoom-brush to the svg
-    // var zbrush = plotSVG.append("g")
-    //     .attr("class", "zoom-brush")
-    //     .call(zoombrush);
+    playerInfoDisp.append("text").attr("id", "playerInfoName").attr("y", 0);
+    playerInfoDisp.append("text").attr("id", "playerInfoPos").attr("y", 15);
+    playerInfoDisp.append("text").attr("id", "playerInfoHeight").attr("y", 30);
+    playerInfoDisp.append("text").attr("id", "playerInfoWeight").attr("y", 45);
+    playerInfoDisp.append("text").attr("id", "playerInfoBirth").attr("y", 60);
+    playerInfoDisp.append("text").attr("id", "playerInfoCollege").attr("y", 75);
+    playerInfoDisp.append("text").attr("id", "playerInfoRookieYear").attr("y", 90);
 
     var charts = [
       barChart()
         .dimension(filter_weight)
         .group(filter_weights)
         .x(
-          d3.scale
-            .linear()
+          d3.scaleLinear()
             .domain([110, 370])
             .rangeRound([0, 425])
         ),
@@ -180,8 +137,7 @@ $(document).ready(function() {
         .dimension(filter_height)
         .group(filter_heights)
         .x(
-          d3.scale
-            .linear()
+          d3.scaleLinear()
             .domain([62, 92])
             .rangeRound([0, 425])
         ),
@@ -190,8 +146,7 @@ $(document).ready(function() {
         .dimension(filter_year)
         .group(filter_years)
         .x(
-          d3.scale
-            .linear()
+          d3.scaleLinear()
             .domain([1947, 2019])
             .rangeRound([0, 900])
         )
@@ -200,10 +155,17 @@ $(document).ready(function() {
     //Iniatilize the filter barcharts
     var chart = d3
       .selectAll(".chart")
-      .data(charts)
-      .each(function(chart) {
-        chart.on("brush", renderAll).on("brushend", renderAll);
-      });
+      .data(charts);
+
+    window.filter = filters => {
+      filters.forEach((d, i) => { charts[i].filter(d); });
+      renderAll();
+    };
+  
+    window.reset = i => {
+      charts[i].filter(null);
+      renderAll();
+    };
 
     var lists = [
       d3.select("#top-height"),
@@ -332,7 +294,7 @@ $(document).ready(function() {
 
     //Appends player info to the SVG
     d3.selection.prototype.showPlayerInfo = function(d) {
-      playerInfo = this[0][0].__data__;
+      playerInfo = this._groups[0][0].__data__;
       $(".playerInfo").css("display", "block");
 
       plotSVG
@@ -367,29 +329,10 @@ $(document).ready(function() {
       });
     };
 
-    //Handles the zoom-brush
-    // function brushended() {
-    // var s = zoombrush.extent();
-    // plotSVG.selectAll(".selected").classed("selected", false)
-    //     .transition().duration(1000).attr("r", 4);
-
-    // var selCir = plotSVG.selectAll("circle")
-    //     .filter(function(d) {
-    //     return s[0][0] <= d.weight && s[1][0] >= d.weight && s[0][1] <= d.height && s[1][1] >= d.height;
-    // });
-
-    // selCir.transition().duration(1000)
-    //     .attr("r", 10);
-
-    // selCir.classed("selected", function(d, i) {
-    //     return !d3.select(this).classed("selected");
-    // });
-    // }
-
     //Handles rendering the top player lists
     function playerList(div) {
       var topPlayers;
-      switch (this[0][0].id) {
+      switch (div._groups[0][0].id) {
         case "top-height":
           topPlayers = filter_height.top(10);
           break;
@@ -498,259 +441,230 @@ $(document).ready(function() {
     //The barchart function
     function barChart() {
       if (!barChart.id) barChart.id = 0;
-
-      var margin = { top: 10, right: 10, bottom: 20, left: 20 },
-        x,
-        y = d3.scale.linear().range([100, 0]),
-        id = barChart.id++,
-        axis = d3.svg
-          .axis()
-          .orient("bottom")
-          .tickFormat(d3.format("d")),
-        brush = d3.svg.brush(),
-        brushDirty,
-        dimension,
-        group,
-        round;
-
+  
+      let margin = { top: 10, right: 13, bottom: 20, left: 10 };
+      let x;
+      let y = d3.scaleLinear().range([100, 0]);
+      const id = barChart.id++;
+      const axis = d3.axisBottom();
+      const brush = d3.brushX();
+      let brushDirty;
+      let dimension;
+      let group;
+      let round;
+      let gBrush;
+  
       function chart(div) {
-        var width = x.range()[1],
-          height = y.range()[0];
-
+        const width = x.range()[1];
+        const height = y.range()[0];
+  
+        brush.extent([[0, 0], [width, height]]);
+  
         y.domain([0, group.top(1)[0].value]);
-
-        div.each(function() {
-          var div = d3.select(this),
-            g = div.select("g");
-
+  
+        div.each(function () {
+          const div = d3.select(this);
+          let g = div.select('g');
+  
           // Create the skeletal chart.
           if (g.empty()) {
-            div
-              .select(".title-reset")
-              .append("a")
-              .attr("href", "javascript:reset(" + id + ")")
-              .attr("class", "reset")
-              .text("reset")
-              .style("display", "none");
-
-            g = div
-              .append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
-              .append("g")
-              .attr(
-                "transform",
-                "translate(" + margin.left + "," + margin.top + ")"
-              );
-
-            g
-              .append("clipPath")
-              .attr("id", "clip-" + id)
-              .append("rect")
-              .attr("width", width)
-              .attr("height", height);
-
-            g
-              .selectAll(".bar")
-              .data(["background", "foreground"])
-              .enter()
-              .append("path")
-              .attr("class", function(d) {
-                return d + " bar";
-              })
-              .datum(group.all());
-
-            g
-              .selectAll(".foreground.bar")
-              .attr("clip-path", "url(#clip-" + id + ")");
-
-            g
-              .append("g")
-              .attr("class", "axis")
-              .attr("transform", "translate(0," + height + ")")
+            div.select('.title-reset').append('a')
+              .attr('href', `javascript:reset(${id})`)
+              .attr('class', 'reset')
+              .text('reset')
+              .style('display', 'none');
+  
+            g = div.append('svg')
+              .attr('width', width + margin.left + margin.right)
+              .attr('height', height + margin.top + margin.bottom)
+              .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+  
+            g.append('clipPath')
+              .attr('id', `clip-${id}`)
+              .append('rect')
+                .attr('width', width)
+                .attr('height', height);
+  
+            g.selectAll('.bar')
+              .data(['background', 'foreground'])
+              .enter().append('path')
+                .attr('class', d => `${d} bar`)
+                .datum(group.all());
+  
+            g.selectAll('.foreground.bar')
+              .attr('clip-path', `url(#clip-${id})`);
+  
+            g.append('g')
+              .attr('class', 'axis')
+              .attr('transform', `translate(0,${height})`)
               .call(axis);
-
+  
             // Initialize the brush component with pretty resize handles.
-            var gBrush = g
-              .append("g")
-              .attr("class", "brush")
+            gBrush = g.append('g')
+              .attr('class', 'brush')
               .call(brush);
-            gBrush.selectAll("rect").attr("height", height);
-            gBrush
-              .selectAll(".resize")
-              .append("path")
-              .attr("d", resizePath);
+  
+            gBrush.selectAll('.handle--custom')
+              .data([{ type: 'w' }, { type: 'e' }])
+              .enter().append('path')
+                .attr('class', 'brush-handle')
+                .attr('cursor', 'ew-resize')
+                .attr('d', resizePath)
+                .style('display', 'none');
           }
-
+  
           // Only redraw the brush if set externally.
-          if (brushDirty) {
+          if (brushDirty !== false) {
+            const filterVal = brushDirty;
             brushDirty = false;
-            g.selectAll(".brush").call(brush);
-            div
-              .select(".title-reset a")
-              .style("display", brush.empty() ? "none" : null);
-            if (brush.empty()) {
-              g
-                .selectAll("#clip-" + id + " rect")
-                .attr("x", 0)
-                .attr("width", width);
+  
+            div.select('.title-reset a').style('display', d3.brushSelection(div) ? null : 'none');
+  
+            if (!filterVal) {
+              g.call(brush);
+  
+              g.selectAll(`#clip-${id} rect`)
+                .attr('x', 0)
+                .attr('width', width);
+  
+              g.selectAll('.brush-handle').style('display', 'none');
+              renderAll();
             } else {
-              var extent = brush.extent();
-              g
-                .selectAll("#clip-" + id + " rect")
-                .attr("x", x(extent[0]))
-                .attr("width", x(extent[1]) - x(extent[0]));
+              const range = filterVal.map(x);
+              brush.move(gBrush, range);
             }
           }
-
-          g.selectAll(".bar").attr("d", barPath);
+  
+          g.selectAll('.bar').attr('d', barPath);
         });
-
+  
         function barPath(groups) {
-          var path = [],
-            i = -1,
-            n = groups.length,
-            d;
+          const path = [];
+          let i = -1;
+          const n = groups.length;
+          let d;
           while (++i < n) {
             d = groups[i];
-            path.push(
-              "M",
-              x(d.key),
-              ",",
-              height,
-              "V",
-              y(d.value),
-              "h9V",
-              height
-            );
+            path.push('M', x(d.key), ',', height, 'V', y(d.value), 'h9V', height);
           }
-          return path.join("");
+          return path.join('');
         }
-
+  
         function resizePath(d) {
-          var e = +(d == "e"),
-            x = e ? 1 : -1,
-            y = height / 3;
-          return (
-            "M" +
-            0.5 * x +
-            "," +
-            y +
-            "A6,6 0 0 " +
-            e +
-            " " +
-            6.5 * x +
-            "," +
-            (y + 6) +
-            "V" +
-            (2 * y - 6) +
-            "A6,6 0 0 " +
-            e +
-            " " +
-            0.5 * x +
-            "," +
-            2 * y +
-            "Z" +
-            "M" +
-            2.5 * x +
-            "," +
-            (y + 8) +
-            "V" +
-            (2 * y - 8) +
-            "M" +
-            4.5 * x +
-            "," +
-            (y + 8) +
-            "V" +
-            (2 * y - 8)
-          );
+          const e = +(d.type === 'e');
+          const x = e ? 1 : -1;
+          const y = height / 3;
+          return `M${0.5 * x},${y}A6,6 0 0 ${e} ${6.5 * x},${y + 6}V${2 * y - 6}A6,6 0 0 ${e} ${0.5 * x},${2 * y}ZM${2.5 * x},${y + 8}V${2 * y - 8}M${4.5 * x},${y + 8}V${2 * y - 8}`;
         }
       }
-
-      brush.on("brushstart.chart", function() {
-        var div = d3.select(this.parentNode.parentNode.parentNode);
-        div.select(".title-reset a").style("display", null);
+  
+      brush.on('start.chart', function () {
+        const div = d3.select(this.parentNode.parentNode.parentNode);
+        div.select('.title-reset a').style('display', null);
       });
-
-      brush.on("brush.chart", function() {
-        var g = d3.select(this.parentNode),
-          extent = brush.extent();
-        if (round)
-          g
-            .select(".brush")
-            .call(brush.extent((extent = extent.map(round))))
-            .selectAll(".resize")
-            .style("display", null);
-        g
-          .select("#clip-" + id + " rect")
-          .attr("x", x(extent[0]))
-          .attr("width", x(extent[1]) - x(extent[0]));
-        dimension.filterRange(extent);
+  
+      brush.on('brush.chart', function () {
+        const g = d3.select(this.parentNode);
+        const brushRange = d3.event.selection || d3.brushSelection(this); // attempt to read brush range
+        const xRange = x && x.range(); // attempt to read range from x scale
+        let activeRange = brushRange || xRange; // default to x range if no brush range available
+  
+        const hasRange = activeRange &&
+          activeRange.length === 2 &&
+          !isNaN(activeRange[0]) &&
+          !isNaN(activeRange[1]);
+  
+        if (!hasRange) return; // quit early if we don't have a valid range
+  
+        // calculate current brush extents using x scale
+        let extents = activeRange.map(x.invert);
+  
+        // if rounding fn supplied, then snap to rounded extents
+        // and move brush rect to reflect rounded range bounds if it was set by user interaction
+        if (round) {
+          extents = extents.map(round);
+          activeRange = extents.map(x);
+  
+          if (
+            d3.event.sourceEvent &&
+            d3.event.sourceEvent.type === 'mousemove'
+          ) {
+            d3.select(this).call(brush.move, activeRange);
+          }
+        }
+  
+        // move brush handles to start and end of range
+        g.selectAll('.brush-handle')
+          .style('display', null)
+          .attr('transform', (d, i) => `translate(${activeRange[i]}, 0)`);
+  
+        // resize sliding window to reflect updated range
+        g.select(`#clip-${id} rect`)
+          .attr('x', activeRange[0])
+          .attr('width', activeRange[1] - activeRange[0]);
+  
+        // filter the active dimension to the range extents
+        dimension.filterRange(extents);
+  
+        // re-render the other charts accordingly
+        renderAll();
       });
-
-      brush.on("brushend.chart", function() {
-        if (brush.empty()) {
-          var div = d3.select(this.parentNode.parentNode.parentNode);
-          div.select(".title a").style("display", "none");
-          div
-            .select("#clip-" + id + " rect")
-            .attr("x", null)
-            .attr("width", "100%");
-          dimension.filterAll();
+  
+      brush.on('end.chart', function () {
+        // reset corresponding filter if the brush selection was cleared
+        // (e.g. user "clicked off" the active range)
+        if (!d3.brushSelection(this)) {
+          reset(id);
         }
       });
-
-      chart.margin = function(_) {
+  
+      chart.margin = function (_) {
         if (!arguments.length) return margin;
         margin = _;
         return chart;
       };
-
-      chart.x = function(_) {
+  
+      chart.x = function (_) {
         if (!arguments.length) return x;
         x = _;
         axis.scale(x);
-        brush.x(x);
         return chart;
       };
-
-      chart.y = function(_) {
+  
+      chart.y = function (_) {
         if (!arguments.length) return y;
         y = _;
         return chart;
       };
-
-      chart.dimension = function(_) {
+  
+      chart.dimension = function (_) {
         if (!arguments.length) return dimension;
         dimension = _;
         return chart;
       };
-
-      chart.filter = function(_) {
-        if (_) {
-          brush.extent(_);
-          dimension.filterRange(_);
-        } else {
-          brush.clear();
-          dimension.filterAll();
-        }
-        brushDirty = true;
+  
+      chart.filter = _ => {
+        if (!_) dimension.filterAll();
+        brushDirty = _;
         return chart;
       };
-
-      chart.group = function(_) {
+  
+      chart.group = function (_) {
         if (!arguments.length) return group;
         group = _;
         return chart;
       };
-
-      chart.round = function(_) {
+  
+      chart.round = function (_) {
         if (!arguments.length) return round;
         round = _;
         return chart;
       };
-
-      return d3.rebind(chart, brush, "on");
+  
+      chart.gBrush = () => gBrush;
+  
+      return chart;
     }
   });
 });
