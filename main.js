@@ -258,14 +258,14 @@ $(document).ready(function() {
       var searchedPlayer = $(this)[0].value.toLowerCase();
 
       //Find corresponding player
-      var thePlayer = d3.selectAll(".dot").filter(function(d) {
+      var thePlayer = d3.selectAll("circle").filter(function(d) {
         return d.name.toLowerCase() == searchedPlayer;
       });
 
       //Reset previously searched players
       var prevPlayer = plotSVG.selectAll(".searched");
 
-      if (prevPlayer[0].length > 0) {
+      if (prevPlayer._groups[0].length > 0) {
         prevPlayer
           .transition()
           .duration(250)
@@ -276,7 +276,7 @@ $(document).ready(function() {
       }
 
       //Make changes to selected player if name matches
-      if (thePlayer[0].length > 0) {
+      if (thePlayer._groups[0].length > 0) {
         thePlayer.moveToFront();
         thePlayer
           .transition()
