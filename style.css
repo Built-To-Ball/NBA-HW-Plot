@@ -16,7 +16,7 @@
 main {
   position: relative;
   margin: 0 auto 20px auto;
-  max-width: 1050px;
+  width: 100%;
   padding-top: 75px;
 }
 
@@ -91,7 +91,7 @@ input {
 .plotSVG svg {
   margin: 4vh 0 4vh 0;
   padding: 2vh 2vw 2vh 2vw;
-  box-shadow: 2em 2em 4em 1em rgba(0, 0, 0, 0.7);
+  box-shadow: 1em 1em 4em 0em rgba(0, 0, 0, 0.4);
 }
 
 .tick,
